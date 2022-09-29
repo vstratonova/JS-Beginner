@@ -3,56 +3,92 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Homework - Стратонова</title>
+  <title>Homework 5 - Стратонова</title>
 </head>
 
 <body>
   <!--
 Обязательное задание.
 
-Для кода вставленного в теге script необходимо дать комментарии, почему мы
-получаем такой результат (в свободной форме).
-
-Подсказка. Чтобы лучше разобраться возьмите этот код и запустите в отладчике в
-браузере со включенными точками остановки.
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
 -->
+
+  <a href="#" class="card-link">Card link</a>
+  <a href="#" class="card-link">Another link</a>
+
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title" data-number="100">Card title</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+      <p class="card-text" data-number="50">
+        Some quick example text to build on the card title and make up the bulk of the card's
+        content.
+      </p>
+      <a href="#" id="super_link" class="card-link">Card link</a>
+      <a href="#" class="card-link" data-number="50">Another link</a>
+    </div>
+  </div>
+
   <script>
     "use strict";
 
-    let a = 1, b = 1, c, d;
+    /*
+    1. Найти по id, используя getElementById, элемент с id равным "super_link" и
+    вывести этот элемент в консоль.
+     */
+    const superLinkEl = document.getElementById('super_link');
+    console.log(superLinkEl);
 
     /*
-    Оператор ++ перед переменной добавляет единицу к заданному числу и 
-    возвращает  получившееся значение.
-    Переменная a изначально была равна 1. 1 + 1 = 2.
+    2. Внутри всех элементов на странице, которые имеют класс "card-link",
+    поменяйте текст внутри элемента на "ссылка".
      */
-    c = ++a;
-    console.log(c);
+    const cardLinkEl = document.querySelectorAll('.card-link');
+    cardLinkEl.forEach(el => el.textContent = "ссылка");
 
     /*
-    Оператор ++ после переменной возвращает изначальное значение, до прибавления
-    единицы. В данном случае переменная b равна 2, но d равно 2 - 1 = 1.
+    3. Найти все элементы на странице с классом "card-link", которые лежат в
+    элементе с классом "card-body" и вывести полученную коллекцию в консоль.
      */
-    d = b++;
-    console.log(d);
+    console.log(document.querySelectorAll('.card-body .card-link'));
 
     /*
-    В первом выражении a получило значение 2, сейчас к нему прибавляется еще 1. 
-    Получается, значение переменной c 2 + 1 + 2 = 5.
+    4. Найти первый попавшийся элемент на странице у которого есть атрибут
+    data-number со значением 50 и вывести его в консоль.
      */
-    c = 2 + ++a;
-    console.log(c);
+    const dN50 = document.querySelector('[data-number = "50"]');
+    console.log(dN50);
 
     /*
-    Во втором выражении b = 2, сейчас к нему прибавляется еще единица (но так 
-    как ++ находится в постпозиции, то d = изначальное значение b (2) + 2 = 4.
-    При этом b равняется 3, как и a (по результатам предыдущего выражения).
+    5. Выведите содержимое тега title в консоль.
      */
-    d = 2 + b++;
-    console.log(d);
+    console.log(document.title);
 
-    console.log(a);
-    console.log(b);
+
+    /*
+    6. Получите элемент с классом "card-title" и выведите его родительский узел
+    в консоль.
+     */
+    console.log(document.querySelector('.card-title').parentNode);
+
+    /*
+    7. Создайте тег `p`, запишите внутри него текст "Привет" и добавьте созданный
+    тег в начало элемента, который имеет класс "card".
+     */
+
+    const paragraph = document.createElement('p');
+    paragraph.textContent = "Привет";
+    document.querySelector(".card").prepend(paragraph);
+
+
+    /*
+    8. Удалите тег h6 на странице.
+     */
+
+    document.querySelector('h6').remove();
+
+
   </script>
 </body>
 
