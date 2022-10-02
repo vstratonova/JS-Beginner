@@ -3,60 +3,111 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Homework 4 - Стратонова</title>
+  <title>Homework 6 - Стратонова</title>
+  <style>
+    .product {
+      width: 200px;
+      padding: 10px;
+      float: left;
+      margin-right: 30px;
+      box-shadow: 0 0 4px black;
+    }
+  </style>
 </head>
 
 <body>
   <!--
 Обязательное задание.
 
-Необходимо данное задание выполнить в es5 стиле и в es6 стиле.
-Необходимо создать функцию-конструктор/класс для продукта.
-Названия: `ProductES5` для es5 стиля, `ProductES6` для es6 стиля.
-При создании объекта от функции-конструктора/класса необходимо передавать имя
-и цену товара, эта информация должна быть сохранена в объекте.
-Также у объекта должна быть возможность выполнить метод `make25Discount`, данный
-метод должен уменьшать стоимость продукта на 25%.
-Необходимо продемонстрировать работу с объектом (в свободной форме).
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
 -->
+  <div class="product">
+    <div class="productName">Товар 1</div>
+    <img src="https://loremflickr.com/200/300/goods?lock=2" alt="">
+    <button>В корзину</button>
+  </div>
+  <div class="product">
+    <div class="productName">Товар 2</div>
+    <img src="https://loremflickr.com/200/300/goods?lock=12" alt="">
+    <button>В корзину</button>
+  </div>
+  <div class="product">
+    <div class="productName">Товар 3</div>
+    <img src="https://loremflickr.com/200/300/goods?lock=33" alt="">
+    <button>В корзину</button>
+  </div>
+
   <script>
     "use strict";
 
-    function ProductES5(productName, productPrice) {
-      this.productName = productName;
-      this.productPrice = productPrice;
+    /*
+    1. Установите всем элементам с классом "productName" размер шрифта 24px.
+     */
+    const productNameEl = document.querySelectorAll('.productName');
+    productNameEl.forEach(el => el.style.fontSize = '24px');
+
+
+    /*
+    2. Установите всем элементам с классом "product" внешний отступ справа 50px.
+     */
+
+    document
+      .querySelectorAll('.product')
+      .forEach(el => el.style.marginRight = '50px');
+
+
+    /*
+    3. При клике на кнопку "В корзину" название кнопки должно поменяться на
+    "Добавлено" и кнопка должна стать неактивной.
+     */
+
+    const buttonEl = document.querySelectorAll('button');
+
+    function modifyButtonText(button, new_text) {
+      button.textContent = new_text;
+      button.disabled = true;
     }
 
-    ProductES5.prototype.make25Discount = function () {
-      this.productPrice *= 0.75
-    }
+    buttonEl.forEach(el =>
+      el.addEventListener("click", function () {
+        modifyButtonText(this, 'Добавлено')
+      })
+    );
 
-    const product1 = new ProductES5('towel', '10');
 
-    console.log(`A ${product1.productName} costs ${product1.productPrice}.`);
-    product1.make25Discount();
-    console.log(`The reduced price of the ${product1.productName} is 
-    ${product1.productPrice}.`);
+    /*
+    4. Создайте полную (глубокую) копию элемента с классом product, измените в
+    этой копии путь до картинки на:
+    https://loremflickr.com/200/300/goods?lock=37
+    Поставьте название товара в данной копии "Товар 4" и замените последний
+    отображенный товар на странице на созданную копию. У данной копии также
+    должен правильно работать код из 3-го задания.
+     */
 
-    // -----------------------------------------------------------------
+    const productCopy = document.querySelector('.product').cloneNode(true);
+    productCopy
+      .querySelector('img')
+      .src = 'https://loremflickr.com/200/300/goods?lock=37';
+    productCopy.querySelector('.productName').textContent = 'Товар 4';
+    document.querySelector('.product:last-of-type').replaceWith(productCopy);
+    productCopy
+      .querySelector('button')
+      .addEventListener("click", function () {
+        modifyButtonText(this, 'Добавлено')
+      })
 
-    class ProductES6 {
-      constructor(productName, productPrice) {
-        this.productName = productName;
-        this.productPrice = productPrice;
-      }
 
-      make25Discount() {
-        this.productPrice *= 0.75;
-      }
-    }
 
-    const product = new ProductES6('towel', '10');
+    /*
+    5. По истечении 2 секунд с момента открытия страницы первый товар должен быть
+    удален из html.
+     */
 
-    console.log(`A ${product.productName} costs ${product.productPrice}.`);
-    product.make25Discount();
-    console.log(`The reduced price of the ${product.productName} is 
-    ${product.productPrice}.`);
+    setTimeout(function () {
+      document.querySelector('.product').remove()
+    }, 2000);
+
 
   </script>
 </body>

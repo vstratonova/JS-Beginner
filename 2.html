@@ -3,124 +3,126 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Homework 4 - Стратонова</title>
+  <title>Homework 6 - Стратонова</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css">
+  <style>
+    .message {
+      width: 150px;
+      padding: 20px;
+      background: lightgoldenrodyellow;
+      border: 1px solid orange;
+      visibility: hidden;
+    }
+
+    .error {
+      border: 0.3rem solid red;
+    }
+  </style>
 </head>
 
 <body>
   <!--
 Обязательное задание.
 
-Необходимо данное задание выполнить в es5 стиле и в es6 стиле.
-Необходимо создать функцию-конструктор/класс для поста в социальной сети.
-Названия: `PostES5` для es5 стиля и `PostES6` для es6 стиля.
-Пост должен хранить:
-1. Автора поста (имени достаточно).
-2. Текст поста.
-3. Дату и время последнего изменения поста.
-Данные автора поста и текст поста необходимо передавать при создании
-экземпляра объекта.
-Каждому экземпляру объекта должен быть доступен метод `edit`, который будет
-менять текст поста.
-
----
-
-Необходимо создать функцию-конструктор/класс для закрепленного поста в
-социальной сети.
-Названия: `AttachedPostES5` для es5 стиля и `AttachedPostES6` для es6 стиля.
-Закрепленный пост должен наследоваться от обычного поста.
-Данные автора поста и текст поста необходимо передавать при создании
-экземпляра объекта.
-Закрепленный пост должен иметь свойство `highlighted`, в котором по умолчанию
-будет лежать значение false (это свойство будет обозначать, будет ли наш
-закрепленный пост подсвечен).
-У экземпляров объекта закрепленного поста должен быть метод с названием
-`makeTextHighlighted`, который сделает так, чтобы наш пост стал подсвеченным
-(будет менять свойство `highlighted`).
-
----
-
-Подсказки:
-1. Задание сложное, советую делать по аналогии с примером на онлайн-занятии.
-2. Обратите внимание что пост хранит "дату и время последнего изменения
-поста", это значит что если пост кто-то изменит (например вызовет какой-то
-метод, который изменит что-то в посте), дата и время последнего изменения
-поста также должна измениться.
-3. Выполняйте все по порядку, не стоит пытаться сделать все сразу, иначе можно
-что-нибудь пропустить.
-4. Если непонятно условие - задайте вопрос.
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
 -->
+
+  <input id="from" type="text">
+  В инпуте написано: <span></span>
+
+  <br>
+
+  <button class="messageBtn">Показать блок</button>
+  <div class="message">
+    Привет :)
+  </div>
+
+  <br>
+
+  <form>
+    <label>
+      Первый инпут:
+      <input class="form-control" type="text">
+    </label>
+    <br>
+    <br>
+    <label>
+      Второй инпут:
+      <select class="form-control">
+        <option value=""></option>
+        <option value="1">Один</option>
+        <option value="2">Два</option>
+      </select>
+    </label>
+    <br>
+    <br>
+    <button>Отправить</button>
+  </form>
+
   <script>
     "use strict";
 
-    function PostES5(author, text) {
-      this.author = author;
-      this.text = text;
-      this.lastModified = new Date();
-    }
-
-    PostES5.prototype.edit = function (text) {
-      this.text = text;
-      this.lastModified = new Date();
-    }
-
-    const post = new PostES5('Victoria', 'Post copy');
-    console.log(post);
-    post.edit('New post copy');
-    console.log(post);
-
-    function AttachedPostES5(author, text) {
-      PostES5.call(this, author, text);
-      this.highlighted = false;
-    }
-
-    AttachedPostES5.prototype = Object.create(PostES5.prototype);
-    AttachedPostES5.prototype.constructor = AttachedPostES5;
-    AttachedPostES5.prototype.makeTextHighlighted = function () {
-      this.highlighted = true;
-      this.updatedAt = new Date();
-    };
-
-    const pinnedES5 = new AttachedPostES5('Victoria', 'Post copy');
-    console.log(pinnedES5);
-    pinnedES5.makeTextHighlighted();
-    pinnedES5.edit('New post copy');
-    console.log(pinnedES5);
+    /*
+    1. При изменении значения в input с id="from", значение содержащееся в нем
+    должно моментально отображаться в span. То есть при печати в input'е тег span
+    также должен меняться.
+    */
+    const fromEl = document.querySelector('span');
+    const inputEl = document.querySelector('input');
+    inputEl.addEventListener('input', e => {
+      fromEl.textContent = e.target.value;
+    });
 
 
-    //----------------------------------------------
+    /*
+    2. При клике на кнопку с классом messageBtn необходимо элементу с классом
+    message:
+    1) добавить два класса: animate__animated и animate__fadeInLeftBig
+    2) поставить данному элементу стиль visibility в значение 'visible'.
+     */
+    const messageBtnEl = document.querySelector('.messageBtn');
+    const messageEl = document.querySelector('.message');
+    messageBtnEl.addEventListener('click', () => {
+      messageEl.classList.add('animate__animated', 'animate__fadeInLeftBig');
+      messageEl.style.visibility = 'visible';
+    })
 
-    class PostES6 {
-      constructor(author, text) {
-        this.author = author;
-        this.text = text;
-        this.lastModified = new Date();
+
+    /*
+    3. Необходимо при отправке формы проверить, заполнены ли все поля в этой
+    форме. Если какое-либо поле не заполнено, форма не должна отправляться, также
+    должны быть подсвечены незаполненные поля (необходимо поставить класс error
+    незаполненным полям).
+    Как только пользователь начинает заполнять какое-либо поле, необходимо,
+    при вводе в данное поле, произвести проверку:
+    Если поле пустое, необходимо данное поле подсветить (поставить класс error
+    данному полю).
+    Если поле было чем-либо заполнено, подсветку (класс error) необходимо убрать.
+     */
+
+    const formEl = document.querySelector('form');
+    const formFields = formEl.querySelectorAll('input, select');
+
+    function fieldCheck(event, el) {
+      if (el.value === '') {
+        el.classList.add('error');
+        event.preventDefault();
+      } else {
+        el.classList.remove('error');
       }
-
-      edit(text) {
-        this.text = text;
-        this.lastModified = new Date();
-      }
     }
-
-    const postES6 = new PostES6('Victoria', 'Post copy');
-    console.log(postES6);
-    postES6.edit('New post copy');
-    console.log(postES6);
-
-    class AttachedPostES6 extends PostES6 {
-      highlighted = false;
-
-      makeTextHighlighted() {
-        this.highlighted = true;
-        this.lastModified = new Date();
+    function formCheck(event) {
+      for (let i = 0; i < formFields.length; i++) {
+        fieldCheck(event, formFields[i]);
       }
     }
 
-    const pinnedES6 = new AttachedPostES6('Victoria', 'Post copy');
-    console.log(pinnedES6);
-    pinnedES6.makeTextHighlighted();
-    pinnedES6.edit('New post copy');
-    console.log(pinnedES6); 
+    formEl.addEventListener('submit', event => formCheck(event));
+    formFields.forEach(el => el.addEventListener('input', event =>
+      fieldCheck(event, el)));
+
+
   </script>
 </body>
 
